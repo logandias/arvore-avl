@@ -5,7 +5,7 @@
 
 typedef struct _Arv{
     int valor;
-    int fb;
+    int h;
     struct _Arv esq;
     struct _Arv dir;
 }Arv;
