@@ -9,9 +9,53 @@ void atualizarAltura(No *arv);
 No *inserir(No *arv,  int x);
 //-----------------------------------------
 
+void menu(){
+   printf("\n\tÁrvore AVL\n\n");
+    printf("1 - Inserir\n");
+    printf("2 - Remover\n");
+    printf("3 - Buscar\n");
+    printf("4 - Grau da árvore\n");
+    printf("5 - Excluir árvore\n");
+    printf("0 - sair\n");
+}
 
-int buscar(No* arv,  int x){
+void buscar(No* arv, int x){
+    if (arv == NULL){
+        printf("Elemento não existe na árvore\n");
+    }
 
+    if (x == arv->valor) {
+        printf("O valor %d está na árvore\n", x);
+    }
+
+    if (x < arv->valor){
+        buscar(arv->esq, x);
+    }else{
+        if(x > arv->valor) {
+            buscar(arv->dir, x);
+        }
+    }
+}
+
+void grauArv(No* arv){
+    if (arv == NULL)
+        printf("\nÁrvore não existe\n");
+    else if(arv->esq==NULL && arv->dir!=NULL || arv->esq!=NULL && arv->dir==NULL)
+                printf("\nÁrvore tem grau 1\n");
+        else if(arv->esq!= NULL && arv->dir!=NULL)
+                    printf("\nÁrvore tem grau 2\n");
+}
+
+void resetar(No* arv){
+        if(arv != NULL){
+            resetar(arv->esq);
+            resetar(arv->dir);
+            if(arv->esq==NULL && arv->dir==NULL){
+                free(arv);
+                arv = NULL;
+            }
+        }
+        printf("Árvore excluída\n");
 }
 
 No *inserir(No *arv,  int x)
@@ -81,15 +125,15 @@ int remover(No** arv, int x){
     }
     if((*arv)->valor < x){
         if((res=remover(&(*arv)->dir, x))==1){
-            if(*arv->esq->h - *arv->dir->h == 2){
+            if((*arv)->esq->h - (*arv)->dir->h == 2){
                 if(altura((*arv)->esq->dir) <= altura((*arv)->esq->esq))
                     rotacaoSimplesDireita(arv);
                 else
-                    esquerdaDireita(arv)
+                    esquerdaDireita(arv);
             }
         }
     }
-    if((*arv)->valor == valor){
+    if((*arv)->valor == x){
         if((*arv)->esq == NULL || (*arv)->dir==NULL){
             No* oldNode = (*arv);
             if((*arv)->esq != NULL)
@@ -168,12 +212,12 @@ int altura(No** arv){
     return *arv->h;
 }
 int grauSub(No** arv){
-    if(arv->esq == NULL || arv->dir == NULL){
-        if(arv->esq != NULL){
+    if(*arv->esq == NULL || *arv->dir == NULL){
+        if(*arv->esq != NULL){
             return 1;
         }
-        if(arv->dir != NULL){
-            return 1
+        if(*arv->dir != NULL){
+            return 1;
         }
         return 0;
     }

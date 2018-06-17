@@ -11,7 +11,9 @@ typedef struct _Arv{
     struct _Arv *dir;
 }No;
 
-int buscar(No* arv, int x);
+void buscar(No* arv, int x);
+void resetar(No* arv);
+void grauArv(No* arv);
 No *inserir(No* arv,  int x);
 int remover(No** arv, int x);
 
